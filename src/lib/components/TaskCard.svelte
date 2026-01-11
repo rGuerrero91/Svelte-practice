@@ -3,16 +3,23 @@
 
 	// TODO: Add the missing 'task' prop
 	// Hint: export let task;
+	let task  = {};
+
 
 	// TODO: Create a priorityColors object to map priority levels to colors
 	// Hint: low -> 'var(--success)', medium -> 'var(--warning)', high -> 'var(--danger)'
 	const priorityColors = {
 		// Your code here
+		low: 'var(--success)',
+		medium: 'var(--warning)',
+		high: 'var(--danger)',
+		// note to self: 'var(--name)' is a css styling attribute call, in this case the colors are assigned to the status name. 
 	};
 
 	function handleToggleComplete() {
 		// TODO: Call the toggleComplete method from taskStore
 		// Hint: taskStore.toggleComplete(task.id)
+
 	}
 
 	function handleDelete() {
