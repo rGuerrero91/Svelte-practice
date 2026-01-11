@@ -5,6 +5,7 @@ Welcome to your incomplete Svelte Task Dashboard! This project is intentionally 
 ## What This Project Does
 
 A task management dashboard built with SvelteKit that allows users to:
+
 - View all tasks with filtering by status
 - Add new tasks with validation
 - Mark tasks as complete/incomplete
@@ -69,6 +70,7 @@ Work through these tasks in order (or jump around if you prefer!):
 ### Advanced Tasks (Essential Svelte Concepts)
 
 **Transitions & Animations:**
+
 - [ ] **TaskList.svelte** - Customize the slide transition with duration and delay parameters
 - [ ] **TaskCard.svelte** - Add custom duration to the fade transition on the card
 - [ ] **TaskCard.svelte** - Add fly transition to the delete button (uncomment import and implement)
@@ -76,6 +78,7 @@ Work through these tasks in order (or jump around if you prefer!):
 - [ ] **+page.svelte** - Add fade transition with custom parameters to the Filter Controls section
 
 **Custom Events (createEventDispatcher):**
+
 - [ ] **TaskCard.svelte** - Implement the `handleDelete()` function to dispatch a 'delete' event
 - [ ] **TaskCard.svelte** - BONUS: Create `handleEdit()` function that dispatches an 'edit' event
 - [ ] **TaskList.svelte** - Create `handleDelete()` function to handle delete events from TaskCard
@@ -86,6 +89,7 @@ Work through these tasks in order (or jump around if you prefer!):
 - [ ] **+page.svelte** - BONUS: Implement `handleTaskEdit()` for future editing functionality
 
 **Derived Stores:**
+
 - [ ] **derived.js** - Implement `completedTasksCount` derived store
 - [ ] **derived.js** - Implement `completionPercentage` derived store
 - [ ] **derived.js** - Implement `tasksByPriority` derived store
@@ -97,6 +101,7 @@ Work through these tasks in order (or jump around if you prefer!):
 - [ ] **StatsCard.svelte** - Use `$tasksByPriority` for priority counts
 
 **Slots (Default and Named Slots):**
+
 - [ ] **Card.svelte** - Add named slot for card header
 - [ ] **Card.svelte** - Add named slot for card footer (make it optional)
 - [ ] **Card.svelte** - Add styles for `.card-header` and `.card-footer`
@@ -115,6 +120,7 @@ Work through these tasks in order (or jump around if you prefer!):
 Once you've completed all the tasks above, you should be able to:
 
 **Basic Functionality:**
+
 1. √ See the dashboard with sample tasks displayed
 2. √ Filter tasks by status (All, Todo, In Progress, Done) and see the list update
 3. √ Add a new task using the form (with validation preventing empty fields)
@@ -128,19 +134,14 @@ Once you've completed all the tasks above, you should be able to:
 7. √ See proper color coding on task cards based on priority
 8. √ See tasks sorted with high priority first
 
-**Advanced Features:**
-9. √ See smooth transitions when tasks are added, removed, or filtered (slide, fade animations)
-10. √ Observe event flow from TaskCard → TaskList → Page → Store (check browser console)
-11. √ See statistics auto-update via derived stores (no manual calculations in components)
-12. √ Open the "About This App" modal and see custom slot content
-13. √ Customize modal header and footer using named slots
-14. √ (BONUS) See StatsCard wrapped in Card component with header/footer slots
+**Advanced Features:** 9. √ See smooth transitions when tasks are added, removed, or filtered (slide, fade animations) 10. √ Observe event flow from TaskCard → TaskList → Page → Store (check browser console) 11. √ See statistics auto-update via derived stores (no manual calculations in components) 12. √ Open the "About This App" modal and see custom slot content 13. √ Customize modal header and footer using named slots 14. √ (BONUS) See StatsCard wrapped in Card component with header/footer slots
 
 ## Learning Resources
 
 ### Svelte Concepts You'll Practice
 
 **Core Concepts (Original):**
+
 - **Component Props**: Passing data between components
 - **Event Handlers**: Handling user interactions
 - **Reactive Statements**: Using `$:` for computed values
@@ -151,6 +152,7 @@ Once you've completed all the tasks above, you should be able to:
 - **Each Blocks**: Rendering lists with `{#each}`
 
 **Advanced Concepts (NEW):**
+
 - **Transitions & Animations**: Using `transition:`, `in:`, `out:` directives with built-in transitions (fade, slide, fly, scale)
 - **Custom Events**: Creating and dispatching events with `createEventDispatcher` for component communication
 - **Derived Stores**: Creating computed values that automatically update when source stores change
@@ -161,31 +163,36 @@ Once you've completed all the tasks above, you should be able to:
 ### Helpful Hints
 
 1. **Svelte Reactivity**: Use `$:` before statements to make them reactive
+
    ```svelte
    $: doubled = count * 2; // Updates whenever count changes
    ```
 
 2. **Store Updates**: Use `update()` to modify store values
+
    ```javascript
-   update(currentValue => {
+   update((currentValue) => {
      // Modify and return new value
      return newValue;
    });
    ```
 
 3. **Array Filtering**: Use JavaScript's `filter()` method
+
    ```javascript
-   const filtered = array.filter(item => item.status === 'todo');
+   const filtered = array.filter((item) => item.status === "todo");
    ```
 
 4. **Form Validation**: Check string length and emptiness
+
    ```javascript
    if (!title || title.trim().length < 3) {
-     errors.title = 'Title must be at least 3 characters';
+     errors.title = "Title must be at least 3 characters";
    }
    ```
 
 5. **Transitions**: Import and use built-in transitions
+
    ```svelte
    <script>
      import { fade, slide } from 'svelte/transition';
@@ -194,19 +201,22 @@ Once you've completed all the tasks above, you should be able to:
    ```
 
 6. **Custom Events**: Create and dispatch events
+
    ```javascript
-   import { createEventDispatcher } from 'svelte';
+   import { createEventDispatcher } from "svelte";
    const dispatch = createEventDispatcher();
-   dispatch('eventName', { data: value });
+   dispatch("eventName", { data: value });
    ```
 
 7. **Derived Stores**: Create computed stores
+
    ```javascript
-   import { derived } from 'svelte/store';
-   export const doubled = derived(count, $count => $count * 2);
+   import { derived } from "svelte/store";
+   export const doubled = derived(count, ($count) => $count * 2);
    ```
 
 8. **Slots**: Use default and named slots
+
    ```svelte
    <!-- Parent -->
    <Card>
@@ -255,30 +265,39 @@ src/
 ## Common Issues & Solutions
 
 **Issue**: Tasks don't show up on page load
+
 - **Solution**: Complete the `onMount` function in [+page.svelte](src/routes/+page.svelte) and the `loadTasks()` function in [api.js](src/lib/utils/api.js)
 
 **Issue**: Can't add new tasks
+
 - **Solution**: Implement the `addTask()` method in [tasks.js](src/lib/stores/tasks.js) and complete the form submission in [AddTaskForm.svelte](src/lib/components/AddTaskForm.svelte)
 
 **Issue**: Statistics show as 0
+
 - **Solution**: Complete the reactive calculations in [StatsCard.svelte](src/lib/components/StatsCard.svelte)
 
 **Issue**: Filtering doesn't work
+
 - **Solution**: Complete the reactive statement in [+page.svelte](src/routes/+page.svelte) that filters tasks based on `currentFilter`
 
 **Issue**: Wrong priority colors or sorting
+
 - **Solution**: Fix the bugs in [TaskCard.svelte](src/lib/components/TaskCard.svelte) and [TaskList.svelte](src/lib/components/TaskList.svelte)
 
 **Issue**: Transitions not working
+
 - **Solution**: Make sure you imported the transitions from 'svelte/transition' and added them to the correct elements
 
 **Issue**: Custom events not firing
+
 - **Solution**: Check that you've created the dispatcher with `createEventDispatcher()`, dispatched the event with the correct name, and added the `on:eventname` listener to the parent component
 
 **Issue**: Derived stores showing 0 or undefined
+
 - **Solution**: Complete the derived store implementations in [derived.js](src/lib/stores/derived.js) and use the `$` prefix when accessing them in components (e.g., `$completedTasksCount`)
 
 **Issue**: Modal not appearing
+
 - **Solution**: Make sure `isOpen` is set to `true` when you click the button, and check that you've added the Modal component outside the main container div
 
 ## Next Steps After Completion
@@ -286,6 +305,7 @@ src/
 Once you've completed this project, you'll have learned the essential Svelte concepts! Here are some ideas to continue your learning:
 
 **Feature Enhancements:**
+
 - Add a search feature to find tasks by title or description
 - Implement task editing functionality (use the edit event you created!)
 - Add due dates to tasks with date pickers
@@ -294,6 +314,7 @@ Once you've completed this project, you'll have learned the essential Svelte con
 - Implement task priorities with visual indicators
 
 **Technical Improvements:**
+
 - Add local storage persistence (save tasks to browser)
 - Build a dark mode toggle (use context API or stores)
 - Implement more complex animations (crossfade, custom transitions)
@@ -302,6 +323,7 @@ Once you've completed this project, you'll have learned the essential Svelte con
 - Build a confirmation modal for deletions
 
 **Advanced Svelte Concepts to Explore:**
+
 - **Actions** (`use:` directive) - for click-outside, tooltips, focus trap
 - **Context API** - for dependency injection and avoiding prop drilling
 - **Readable Stores** - for read-only computed state
@@ -312,9 +334,10 @@ Once you've completed this project, you'll have learned the essential Svelte con
 - **Component Bindings** - `bind:this` to get component instances
 
 **Resources:**
+
 - [Svelte Tutorial](https://svelte.dev/tutorial) - Official interactive tutorial
 - [Svelte Documentation](https://svelte.dev/docs) - Complete API reference
 - [SvelteKit Documentation](https://kit.svelte.dev/docs) - Full-stack framework
 - [Svelte Society](https://sveltesociety.dev/) - Community recipes and resources
 
-Good luck, and happy learning! 🚀
+Good luck, and happy learning!
