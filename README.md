@@ -115,26 +115,26 @@ Work through these tasks in order (or jump around if you prefer!):
 Once you've completed all the tasks above, you should be able to:
 
 **Basic Functionality:**
-1. ✅ See the dashboard with sample tasks displayed
-2. ✅ Filter tasks by status (All, Todo, In Progress, Done) and see the list update
-3. ✅ Add a new task using the form (with validation preventing empty fields)
-4. ✅ Click the checkbox on a task to mark it complete/incomplete
-5. ✅ Delete a task using the delete button
-6. ✅ See accurate statistics updating in real-time:
+1. √ See the dashboard with sample tasks displayed
+2. √ Filter tasks by status (All, Todo, In Progress, Done) and see the list update
+3. √ Add a new task using the form (with validation preventing empty fields)
+4. √ Click the checkbox on a task to mark it complete/incomplete
+5. √ Delete a task using the delete button
+6. √ See accurate statistics updating in real-time:
    - Total number of tasks
    - Number of completed tasks
    - Completion percentage
    - Breakdown by priority (high/medium/low)
-7. ✅ See proper color coding on task cards based on priority
-8. ✅ See tasks sorted with high priority first
+7. √ See proper color coding on task cards based on priority
+8. √ See tasks sorted with high priority first
 
 **Advanced Features:**
-9. ✅ See smooth transitions when tasks are added, removed, or filtered (slide, fade animations)
-10. ✅ Observe event flow from TaskCard → TaskList → Page → Store (check browser console)
-11. ✅ See statistics auto-update via derived stores (no manual calculations in components)
-12. ✅ Open the "About This App" modal and see custom slot content
-13. ✅ Customize modal header and footer using named slots
-14. ✅ (BONUS) See StatsCard wrapped in Card component with header/footer slots
+9. √ See smooth transitions when tasks are added, removed, or filtered (slide, fade animations)
+10. √ Observe event flow from TaskCard → TaskList → Page → Store (check browser console)
+11. √ See statistics auto-update via derived stores (no manual calculations in components)
+12. √ Open the "About This App" modal and see custom slot content
+13. √ Customize modal header and footer using named slots
+14. √ (BONUS) See StatsCard wrapped in Card component with header/footer slots
 
 ## Learning Resources
 
