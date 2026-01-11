@@ -1,36 +1,78 @@
 <script>
+	// NEW: Import derived stores for automatic computed values
+	// Derived stores are a better pattern than manual reactive calculations
+	// when the same computed value is needed in multiple components
+	import {
+		totalTasksCount,
+		completedTasksCount,
+		completionPercentage,
+		tasksByPriority
+	} from '$lib/stores/derived.js';
+
+	// BONUS TODO: Import and use the Card component as a wrapper
+	// This demonstrates how slots work in practice!
+	// Uncomment the line below:
+	// import Card from './Card.svelte';
+
 	export let tasks = [];
 
-	// TODO: Calculate the total number of tasks
-	// Hint: tasks.length
-	let totalTasks;
+	// OLD WAY: Manual reactive calculations (keep for reference)
+	// This approach works but requires duplication across components
+	// Uncomment to compare with derived stores:
+	//
+	// let totalTasks;
+	// let completedTasks;
+	// let completionPercentage;
+	// let highPriorityCount;
+	// let mediumPriorityCount;
+	// let lowPriorityCount;
+	//
+	// $: {
+	//   totalTasks = tasks.length;
+	//   completedTasks = tasks.filter(t => t.completed).length;
+	//   completionPercentage = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
+	//   highPriorityCount = tasks.filter(t => t.priority === 'high').length;
+	//   mediumPriorityCount = tasks.filter(t => t.priority === 'medium').length;
+	//   lowPriorityCount = tasks.filter(t => t.priority === 'low').length;
+	// }
 
-	// TODO: Calculate the number of completed tasks
-	// Hint: Use filter to count tasks where completed === true
-	let completedTasks;
+	// NEW WAY: Using derived stores
+	// TODO: Replace the manual calculations below with derived store values
+	// Hint: Use the $ prefix to auto-subscribe to stores
+	// Example: const totalTasks = $totalTasksCount;
 
-	// TODO: Calculate the completion percentage
-	// Hint: (completedTasks / totalTasks) * 100, handle division by zero
-	let completionPercentage;
+	// TODO: Get totalTasks from the totalTasksCount derived store
+	// Hint: $totalTasksCount
+	let totalTasks = 0; // Replace this
 
-	// TODO: Count tasks by priority (high, medium, low)
-	// Hint: Use filter or reduce to count each priority level
-	let highPriorityCount;
-	let mediumPriorityCount;
-	let lowPriorityCount;
+	// TODO: Get completedTasks from the completedTasksCount derived store
+	let completedTasks = 0; // Replace this
 
-	// TODO: Create reactive statements for all the above calculations
-	// Hint: Use $: syntax to make them reactive to tasks changes
-	$: {
-		// Your calculations here
-		totalTasks = 0;
-		completedTasks = 0;
-		completionPercentage = 0;
-		highPriorityCount = 0;
-		mediumPriorityCount = 0;
-		lowPriorityCount = 0;
-	}
+	// TODO: Get completion percentage from the completionPercentage derived store
+	let completionPercent = 0; // Replace this
+
+	// TODO: Get priority counts from the tasksByPriority derived store
+	// Hint: $tasksByPriority.high.length, $tasksByPriority.medium.length, etc.
+	let highPriorityCount = 0;
+	let mediumPriorityCount = 0;
+	let lowPriorityCount = 0;
 </script>
+
+<!-- BONUS TODO: Wrap the content below in a <Card> component -->
+<!-- This will demonstrate how default slots work! -->
+<!-- Example structure:
+<Card>
+	<div slot="header">
+		<h2>Task Statistics</h2>
+	</div>
+
+	[Your stats grid content here]
+
+	<div slot="footer">
+		<button>Refresh</button>
+	</div>
+</Card>
+-->
 
 <div class="stats-container">
 	<div class="stat-card">
@@ -59,7 +101,7 @@
 		</div>
 		<div class="stat-content">
 			<h3>Completion Rate</h3>
-			<p class="stat-value">{completionPercentage.toFixed(0)}%</p>
+			<p class="stat-value">{completionPercent.toFixed(0)}%</p>
 		</div>
 	</div>
 

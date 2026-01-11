@@ -1,5 +1,17 @@
 <script>
 	import { taskStore } from '$lib/stores/tasks.js';
+	// NEW: Import transitions for smooth animations
+	import { fade } from 'svelte/transition';
+	// NEW: Import fly transition for the delete button animation
+	// TODO: Uncomment the line below once you're ready to use it
+	// import { fly } from 'svelte/transition';
+
+	// NEW: Import createEventDispatcher for custom events
+	// This allows child components to communicate with parent components
+	import { createEventDispatcher } from 'svelte';
+
+	// Create the event dispatcher
+	const dispatch = createEventDispatcher();
 
 	// TODO: Add the missing 'task' prop
 	// Hint: export let task;
@@ -10,15 +22,29 @@
 		// Your code here
 	};
 
+	// NEW: Using custom events instead of calling store directly!
+	// This is a better pattern for component communication
 	function handleToggleComplete() {
-		// TODO: Call the toggleComplete method from taskStore
-		// Hint: taskStore.toggleComplete(task.id)
+		// OLD WAY (calling store directly - commented out as reference):
+		// taskStore.toggleComplete(task.id)
+
+		// NEW WAY: Dispatch a custom 'toggle' event to the parent component
+		// The parent will handle updating the store
+		dispatch('toggle', { id: task.id });
 	}
 
 	function handleDelete() {
-		// TODO: Call the deleteTask method from taskStore
-		// Hint: taskStore.deleteTask(task.id)
+		// TODO: Dispatch a 'delete' event instead of calling the store directly
+		// Hint: dispatch('delete', { id: task.id });
+		// Remove the old taskStore.deleteTask(task.id) call
+
+		// OLD WAY (keep for reference):
+		// taskStore.deleteTask(task.id)
 	}
+
+	// BONUS TODO: Create a handleEdit function that dispatches an 'edit' event
+	// This will prepare the codebase for future task editing functionality
+	// Hint: function handleEdit() { dispatch('edit', { task }); }
 
 	// BUG: This function has a wrong comparison operator!
 	// It should return the color, but it's checking the wrong thing
@@ -27,7 +53,10 @@
 	}
 </script>
 
-<div class="task-card" class:completed={task?.completed}>
+<!-- NEW: Added fade transition to the card -->
+<!-- TODO: Customize the transition! Try adding parameters: -->
+<!-- transition:fade={{ duration: 200 }} -->
+<div class="task-card" class:completed={task?.completed} transition:fade>
 	<div class="task-header">
 		<div class="task-title-row">
 			<input
@@ -49,6 +78,10 @@
 		<span class="status-badge status-{task?.status}">
 			{task?.status || 'todo'}
 		</span>
+		<!-- TODO: Add a fly transition to the delete button! -->
+		<!-- Hint: Import fly from 'svelte/transition' and add: -->
+		<!-- transition:fly={{ x: 20, duration: 200 }} -->
+		<!-- This will make the button fly in from the right -->
 		<button class="btn btn-danger btn-sm" on:click={handleDelete}>
 			Delete
 		</button>

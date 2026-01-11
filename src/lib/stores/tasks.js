@@ -1,6 +1,9 @@
 import { writable } from 'svelte/store';
 
 // Create a custom store that extends the writable store
+// NOTE: This is a WRITABLE store - it holds mutable state
+// For computed/calculated values based on this store, see derived.js
+// Derived stores automatically update when this store changes!
 function createTaskStore() {
 	const { subscribe, set, update } = writable([]);
 
