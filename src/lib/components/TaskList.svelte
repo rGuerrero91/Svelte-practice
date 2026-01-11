@@ -8,25 +8,20 @@
 	// NEW: Event handlers for custom events from TaskCard
 	// These will receive events and pass them up to the parent component
 
+	// Receives toggle event from TaskCard and logs it (event forwarding handles parent communication)
 	function handleToggle(event) {
-		// Example implementation (50% complete - just logs for now)
 		console.log('Task toggle event received:', event.detail);
-
-		// TODO: Forward this event to the parent component
-		// You can do this by adding on:toggle to the TaskCard component below
-		// and the event will automatically bubble up (event forwarding)
 	}
 
-	// TODO: Create a handleDelete function to handle delete events from TaskCard
-	// Hint: function handleDelete(event) { console.log('Delete event:', event.detail); }
+	// Receives delete event from TaskCard (event forwarding handles parent communication)
+	function handleDelete(event) {
+		console.log('Delete event:', event.detail);
+	}
 
-	// This computed property is supposed to sort tasks by priority
-	// BUG: The comparison logic is wrong! High priority should come first
-	// Currently low priority comes first (wrong!)
+	// Sorts tasks by priority (high to low)
 	$: sortedTasks = [...tasks].sort((a, b) => {
-		const priorityOrder = { low: 3, medium: 2, high: 1 };
-		// BUG: This comparison is backwards!
-		return priorityOrder[a.priority] - priorityOrder[b.priority];
+		const priorityOrder = { high: 3, medium: 2, low: 1 };
+		return priorityOrder[b.priority] - priorityOrder[a.priority];
 	});
 </script>
 
@@ -37,17 +32,10 @@
 {:else}
 	<div class="task-list">
 		{#each sortedTasks as task (task.id)}
-			<!-- NEW: Added slide transition for smooth task appearance -->
-			<!-- The task will slide in when added and slide out when removed -->
-			<!-- TODO: Experiment with transition parameters! Try adding: -->
-			<!-- transition:slide={{ duration: 300, delay: 0 }} -->
-			<!-- Or try other transitions like fade, fly, or scale -->
-			<div transition:slide>
-				<!-- NEW: Added on:toggle event listener to handle toggle events from TaskCard -->
-				<!-- TODO: Add on:delete event listener to handle delete events -->
-				<!-- Hint: on:delete={handleDelete} -->
-				<!-- Note: Events automatically forward to parent if you use on:toggle on this component -->
-				<TaskCard {task} on:toggle={handleToggle} />
+			<!-- Slide transition for smooth task appearance/removal -->
+			<div transition:slide={{ duration: 300 }}>
+				<!-- Event forwarding: toggle and delete events bubble up to parent -->
+				<TaskCard {task} on:toggle={handleToggle} on:delete={handleDelete} />
 			</div>
 		{/each}
 	</div>

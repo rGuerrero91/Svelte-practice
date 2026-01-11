@@ -32,34 +32,22 @@ const SAMPLE_TASKS = [
 	}
 ];
 
-// TODO: Implement the loadTasks function
-// Should:
-// 1. Simulate an API delay with setTimeout (200-500ms)
-// 2. Return a Promise that resolves with SAMPLE_TASKS
-// 3. You can add error simulation (10% chance?) for practice
+// Simulates fetching tasks from an API with network delay
 export async function loadTasks() {
-	// Your code here
-	// Hint: return new Promise((resolve, reject) => { ... })
+	await delay(300);
+	return SAMPLE_TASKS;
 }
 
-// TODO: Implement the saveTask function
-// Should:
-// 1. Take a task object as parameter
-// 2. Simulate API delay
-// 3. Return a Promise that resolves with the task
-// 4. In a real app, this would POST to an API endpoint
+// Simulates saving a task to an API (would be POST request in real app)
 export async function saveTask(task) {
-	// Your code here
+	await delay(300);
+	return task;
 }
 
-// TODO: Implement the removeTask function
-// Should:
-// 1. Take a task id as parameter
-// 2. Simulate API delay
-// 3. Return a Promise that resolves with success message
-// 4. In a real app, this would DELETE from an API endpoint
+// Simulates deleting a task from an API (would be DELETE request in real app)
 export async function removeTask(id) {
-	// Your code here
+	await delay(300);
+	return { success: true, id };
 }
 
 // Helper function to simulate network delay (already implemented for you!)

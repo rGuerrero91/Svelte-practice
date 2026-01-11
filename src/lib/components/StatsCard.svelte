@@ -36,26 +36,14 @@
 	//   lowPriorityCount = tasks.filter(t => t.priority === 'low').length;
 	// }
 
-	// NEW WAY: Using derived stores
-	// TODO: Replace the manual calculations below with derived store values
-	// Hint: Use the $ prefix to auto-subscribe to stores
-	// Example: const totalTasks = $totalTasksCount;
-
-	// TODO: Get totalTasks from the totalTasksCount derived store
-	// Hint: $totalTasksCount
-	let totalTasks = 0; // Replace this
-
-	// TODO: Get completedTasks from the completedTasksCount derived store
-	let completedTasks = 0; // Replace this
-
-	// TODO: Get completion percentage from the completionPercentage derived store
-	let completionPercent = 0; // Replace this
-
-	// TODO: Get priority counts from the tasksByPriority derived store
-	// Hint: $tasksByPriority.high.length, $tasksByPriority.medium.length, etc.
-	let highPriorityCount = 0;
-	let mediumPriorityCount = 0;
-	let lowPriorityCount = 0;
+	// Using derived stores with auto-subscription ($ prefix)
+	// These values automatically update when the taskStore changes
+	$: totalTasks = $totalTasksCount;
+	$: completedTasks = $completedTasksCount;
+	$: completionPercent = $completionPercentage;
+	$: highPriorityCount = $tasksByPriority.high.length;
+	$: mediumPriorityCount = $tasksByPriority.medium.length;
+	$: lowPriorityCount = $tasksByPriority.low.length;
 </script>
 
 <!-- BONUS TODO: Wrap the content below in a <Card> component -->

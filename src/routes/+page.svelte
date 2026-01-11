@@ -22,41 +22,37 @@
 		tasks = value;
 	});
 
-	// TODO: Implement onMount to load tasks from the API
-	// Hint: Use the loadTasks function and update the store
+	// Loads initial tasks from API when component mounts
 	onMount(async () => {
-		// Your code here
+		const initialTasks = await loadTasks();
+		taskStore.set(initialTasks);
 	});
 
-	// TODO: Create a reactive statement to filter tasks based on currentFilter
-	// Hint: Use $: syntax to make this reactive
-	// Filter should work with: 'all', 'todo', 'in-progress', 'done'
+	// Reactively filters tasks based on selected status
 	$: {
-		// Your filtering logic here
-		// For now, just showing all tasks (incomplete!)
-		filteredTasks = tasks;
+		if (currentFilter === 'all') {
+			filteredTasks = tasks;
+		} else {
+			filteredTasks = tasks.filter(task => task.status === currentFilter);
+		}
 	}
 
+	// Updates filter when dropdown selection changes (bind:value also handles this)
 	function handleFilterChange(event) {
-		// TODO: Update the currentFilter variable
-		// Hint: Get the value from event.target.value
+		currentFilter = event.target.value;
 	}
 
 	// NEW: Event handlers for custom events from TaskList component
 	// These connect the component events to the task store
 
-	// TODO: Implement handleTaskToggle to update the store when a task is toggled
-	// Hint: Use event.detail.id to get the task ID
-	// Call: taskStore.toggleComplete(event.detail.id)
+	// Toggles task completion status via store
 	function handleTaskToggle(event) {
-		// Your code here
+		taskStore.toggleComplete(event.detail.id);
 	}
 
-	// TODO: Implement handleTaskDelete to update the store when a task is deleted
-	// Hint: Similar pattern to handleTaskToggle
-	// Call: taskStore.deleteTask(event.detail.id)
+	// Deletes task from store
 	function handleTaskDelete(event) {
-		// Your code here
+		taskStore.deleteTask(event.detail.id);
 	}
 
 	// BONUS TODO: Implement handleTaskEdit for future editing functionality
@@ -71,18 +67,14 @@
 		<StatsCard tasks={tasks} />
 	</div>
 
-	<!-- Add Task Form -->
-	<!-- TODO: Add separate in and out transitions! -->
-	<!-- Try: in:fade={{ duration: 300 }} out:fade={{ duration: 150 }} -->
-	<div class="section">
+	<!-- Add Task Form with custom in/out transitions -->
+	<div class="section" transition:fade={{ duration: 300 }}>
 		<h2>Add New Task</h2>
 		<AddTaskForm />
 	</div>
 
-	<!-- Filter Controls -->
-	<!-- TODO: Add a fade transition with custom parameters -->
-	<!-- Experiment with different durations and delays! -->
-	<div class="section">
+	<!-- Filter Controls with fade transition -->
+	<div class="section" transition:fade={{ duration: 300, delay: 100 }}>
 		<h2>Tasks</h2>
 		<div class="filter-bar">
 			<label for="filter">Filter by status:</label>
@@ -95,11 +87,8 @@
 		</div>
 	</div>
 
-	<!-- Task List -->
-	<!-- NEW: Added event listeners to handle custom events from TaskList -->
-	<!-- TODO: Add on:delete={handleTaskDelete} event listener -->
-	<!-- BONUS TODO: Add on:edit={handleTaskEdit} for future editing feature -->
-	<TaskList tasks={filteredTasks} on:toggle={handleTaskToggle} />
+	<!-- Task List with event handlers for toggle and delete -->
+	<TaskList tasks={filteredTasks} on:toggle={handleTaskToggle} on:delete={handleTaskDelete} />
 
 	<!-- NEW: Info button to demonstrate Modal with slots -->
 	<!-- TODO: Style this button to match your design -->
@@ -110,15 +99,14 @@
 	</div>
 </div>
 
-<!-- NEW: Modal demonstrating named slots -->
-<!-- This modal shows how to use default and named slots for flexible content -->
+<!-- Modal demonstrating named slots (header, body, footer) -->
 <Modal isOpen={showInfoModal} on:close={() => showInfoModal = false}>
-	<!-- TODO: Add custom header content using the "header" named slot -->
-	<!-- Hint: <div slot="header"><h2>Custom Header</h2></div> -->
-	<!-- If you don't add a header slot, it will use the title prop -->
+	<!-- Custom header using named slot -->
+	<div slot="header">
+		<h2>About This App</h2>
+	</div>
 
 	<!-- Default slot content (main body) -->
-	<!-- TODO: Add your own content here to describe the app -->
 	<div class="modal-content-text">
 		<h3>Welcome to the Svelte Task Dashboard!</h3>
 		<p>This is a learning project built with SvelteKit. Key features:</p>
@@ -131,9 +119,10 @@
 		<p>Complete the TODOs in the code to learn Svelte essentials!</p>
 	</div>
 
-	<!-- TODO: Add custom footer with action buttons using the "footer" named slot -->
-	<!-- Hint: <div slot="footer"><button>Got it!</button></div> -->
-	<!-- If you don't add a footer slot, the modal won't have a footer section -->
+	<!-- Custom footer with action button using named slot -->
+	<div slot="footer">
+		<button class="btn btn-primary" on:click={() => showInfoModal = false}>Got it!</button>
+	</div>
 </Modal>
 
 <style>

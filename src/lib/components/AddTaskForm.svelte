@@ -7,27 +7,37 @@
 	let status = 'todo';
 	let errors = {};
 
-	// TODO: Implement form validation
-	// Should check:
-	// - title is not empty and at least 3 characters
-	// - description is not empty
-	// Return true if valid, false otherwise
+	// Validates form fields: title (min 3 chars) and description (required)
 	function validateForm() {
 		errors = {};
-		// Your validation logic here
 
-		return true; // This should return the actual validation result
+		if (!title.trim()) {
+			errors.title = 'Title is required';
+		} else if (title.trim().length < 3) {
+			errors.title = 'Title must be at least 3 characters';
+		}
+
+		if (!description.trim()) {
+			errors.description = 'Description is required';
+		}
+
+		return Object.keys(errors).length === 0;
 	}
 
-	// TODO: Implement the handleSubmit function
-	// Should:
-	// 1. Validate the form
-	// 2. If valid, create a task object with the form data
-	// 3. Call taskStore.addTask() with the new task
-	// 4. Reset the form fields
-	// 5. If invalid, keep the errors object populated
+	// Validates and submits form, adding task to store and resetting on success
 	function handleSubmit() {
-		// Your code here
+		if (!validateForm()) {
+			return;
+		}
+
+		taskStore.addTask({
+			title: title.trim(),
+			description: description.trim(),
+			priority,
+			status
+		});
+
+		resetForm();
 	}
 
 	function resetForm() {

@@ -11,50 +11,31 @@ export const totalTasksCount = derived(
 	$tasks => $tasks.length
 );
 
-// TODO: Create a derived store for completed tasks count
-// Hint: Use derived() with taskStore as the source
-// Filter tasks where completed === true and return the count
-// Example structure:
-// export const completedTasksCount = derived(
-//   taskStore,
-//   $tasks => {
-//     // Your code here: filter and count completed tasks
-//   }
-// );
+// Counts tasks marked as completed
 export const completedTasksCount = derived(
 	taskStore,
-	$tasks => {
-		// Your code here
-		return 0; // Replace with actual calculation
-	}
+	$tasks => $tasks.filter(task => task.completed).length
 );
 
-// TODO: Create a derived store for completion percentage
-// Should calculate: (completed / total) * 100
-// Handle the case where total is 0 (return 0 to avoid division by zero)
-// Hint: You can derive from taskStore or use multiple stores
+// Calculates completion percentage (handles zero division)
 export const completionPercentage = derived(
 	taskStore,
 	$tasks => {
-		// Your code here
-		return 0; // Replace with actual calculation
+		const total = $tasks.length;
+		if (total === 0) return 0;
+		const completed = $tasks.filter(task => task.completed).length;
+		return Math.round((completed / total) * 100);
 	}
 );
 
-// TODO: Create a derived store that groups tasks by priority
-// Should return an object: { high: [], medium: [], low: [] }
-// Each array contains the tasks of that priority level
+// Groups tasks by priority level
 export const tasksByPriority = derived(
 	taskStore,
-	$tasks => {
-		// Your code here
-		// Hint: Use reduce() or filter() for each priority
-		return {
-			high: [],
-			medium: [],
-			low: []
-		};
-	}
+	$tasks => ({
+		high: $tasks.filter(task => task.priority === 'high'),
+		medium: $tasks.filter(task => task.priority === 'medium'),
+		low: $tasks.filter(task => task.priority === 'low')
+	})
 );
 
 // BONUS TODO: Create a derived store that combines multiple stores

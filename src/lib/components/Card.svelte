@@ -10,25 +10,26 @@
 </script>
 
 <div class="card">
-	<!-- TODO: Add a named slot for the card header -->
-	<!-- Named slots let you define multiple content areas -->
-	<!-- Hint: <slot name="header"></slot> -->
-	<!-- Wrap it in a div with class="card-header" -->
+	<!-- Card header (only renders if header slot has content) -->
+	{#if $$slots.header}
+		<div class="card-header">
+			<slot name="header"></slot>
+		</div>
+	{/if}
 
-	<!-- DEFAULT SLOT: Main content area (COMPLETED as example) -->
-	<!-- The default slot is where content goes when no slot name is specified -->
+	<!-- Default slot for main card content -->
 	<div class="card-body">
 		<slot>
-			<!-- Fallback content if no content is provided -->
 			<p class="placeholder">No content provided</p>
 		</slot>
 	</div>
 
-	<!-- TODO: Add a named slot for the card footer -->
-	<!-- Hint: <slot name="footer"></slot> -->
-	<!-- Wrap it in a div with class="card-footer" -->
-	<!-- Make this optional - only show if content is provided -->
-	<!-- BONUS: Look up Svelte's $$slots to check if a slot has content -->
+	<!-- Card footer (only renders if footer slot has content) -->
+	{#if $$slots.footer}
+		<div class="card-footer">
+			<slot name="footer"></slot>
+		</div>
+	{/if}
 </div>
 
 <style>
@@ -51,19 +52,12 @@
 		margin: 0;
 	}
 
-	/* TODO: Add styles for .card-header */
-	/* Suggested: padding, border-bottom, background color */
-	/* Example:
 	.card-header {
 		padding: 1rem 1.5rem;
 		border-bottom: 1px solid var(--border);
 		background: var(--bg-primary);
 	}
-	*/
 
-	/* TODO: Add styles for .card-footer */
-	/* Suggested: padding, border-top, flex layout for buttons */
-	/* Example:
 	.card-footer {
 		padding: 1rem 1.5rem;
 		border-top: 1px solid var(--border);
@@ -71,5 +65,4 @@
 		justify-content: flex-end;
 		gap: 0.5rem;
 	}
-	*/
 </style>

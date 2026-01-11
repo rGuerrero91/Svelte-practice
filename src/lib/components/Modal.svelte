@@ -29,31 +29,27 @@
 		<!-- Modal content with scale transition -->
 		<!-- on:click|stopPropagation prevents closing when clicking inside modal -->
 		<div class="modal-content" transition:scale={{ duration: 200 }} on:click|stopPropagation>
-			<!-- Modal Header -->
+			<!-- Modal Header with named slot for customization -->
 			<div class="modal-header">
-				<!-- TODO: Replace the h2 below with a named slot for custom header content -->
-				<!-- Hint: <slot name="header"></slot> -->
-				<!-- Keep the title as fallback content if no header slot is provided -->
-				<!-- Advanced: Use {#if $$slots.header} to conditionally render -->
-				<h2>{title}</h2>
+				<slot name="header">
+					<h2>{title}</h2>
+				</slot>
 				<button class="close-button" on:click={close} aria-label="Close modal">
 					&times;
 				</button>
 			</div>
 
-			<!-- Modal Body -->
-			<!-- TODO: Add a default slot here for the main modal content -->
-			<!-- Hint: <slot></slot> or <slot>Fallback content</slot> -->
+			<!-- Modal Body with default slot for main content -->
 			<div class="modal-body">
-				<!-- Your slot here -->
+				<slot>No content provided</slot>
 			</div>
 
-			<!-- Modal Footer -->
-			<!-- TODO: Add a named slot for the footer (typically for action buttons) -->
-			<!-- Hint: <slot name="footer"></slot> -->
-			<!-- Make this section optional - only show if footer content is provided -->
-			<!-- BONUS: Use $$slots.footer to check if footer content exists -->
-			<!-- Example: {#if $$slots.footer}<div class="modal-footer"><slot name="footer"></slot></div>{/if} -->
+			<!-- Modal Footer (only renders if footer slot has content) -->
+			{#if $$slots.footer}
+				<div class="modal-footer">
+					<slot name="footer"></slot>
+				</div>
+			{/if}
 		</div>
 	</div>
 {/if}
@@ -128,8 +124,6 @@
 		flex: 1;
 	}
 
-	/* TODO: Add styles for .modal-footer */
-	/* Suggested styles:
 	.modal-footer {
 		padding: 1rem 1.5rem;
 		border-top: 1px solid var(--border);
@@ -138,5 +132,4 @@
 		gap: 0.5rem;
 		background: var(--bg-secondary);
 	}
-	*/
 </style>
